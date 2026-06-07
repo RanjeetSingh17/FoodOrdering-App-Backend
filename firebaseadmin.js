@@ -1,0 +1,22 @@
+const admin = require('firebase-admin');
+require('dotenv').config();
+
+let adminApp;
+
+try {
+
+    adminApp = admin.app();
+} catch (error) {
+
+    adminApp = admin.initializeApp({
+        credential: admin.credential.cert({
+            type: process.env.FIREBASE_TYPE,
+            project_id: process.env.FIREBASE_PROJECT_ID,
+            private_key: process.env.FIREBASE_PRIVATE_KEY,
+            client_email: process.env.FIREBASE_CLIENT_EMAIL,
+            client_id: process.env.FIREBASE_CLIENT_ID
+        })
+    }, 'student-notification-app');
+}
+
+module.exports = adminApp;
